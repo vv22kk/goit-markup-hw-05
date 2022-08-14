@@ -24,6 +24,9 @@
   --border-client-icon: #afb1b8;
   --client-icon: #afb1b8;
   --background-benefits-icon: #f5f4fa;
+  --back-inform-text-color: rgba(47, 48, 58, 0.8);
+  --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  --backdrop-back-color: rgba(0, 0, 0, 0.2);
 }
 body {
   font-family: 'Roboto', sans-serif;
@@ -129,12 +132,16 @@ button {
   font-weight: 500;
   line-height: 1.14;
   letter-spacing: 0.02em;
+  transition-property: color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .header-logo span {
   color: var(--accent-blue-color);
 }
 .header-link {
+  position: relative;
   display: block;
   padding-top: 32px;
   padding-bottom: 32px;
@@ -152,9 +159,7 @@ button {
 .accent:focus {
   color: var(--accent-blue-color);
 }
-.current {
-  color: var(--accent-blue-color);
-}
+
 .header-mail,
 .header-tel {
   color: var(--main-body-color);
@@ -163,6 +168,21 @@ button {
   margin-right: 10px;
   fill: currentColor;
 }
+.current {
+  color: var(--accent-blue-color);
+}
+.current::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--accent-blue-color);
+}
+
 /*-------------------- hero --------------------*/
 .hero {
   text-align: center;
@@ -260,6 +280,27 @@ button {
 .inform-title {
   margin-bottom: 50px;
 }
+.inform-img-thumb {
+  position: relative;
+}
+.text-inform {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  width: 370px;
+  height: 70px;
+
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.14;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+
+  color: var(--btn-white-color);
+  background: var(--back-inform-text-color);
+}
 /*-------------------- personal --------------------*/
 .personal {
   background-color: var(--personal-back-color);
@@ -311,6 +352,9 @@ button {
   height: 44px;
   border-radius: 50%;
   color: var(--border-client-icon);
+  transition-property: color, background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 .personal-soc-icon {
   fill: currentColor;
@@ -341,6 +385,9 @@ button {
   border-radius: 4px;
   width: 170px;
   height: 92px;
+  transition-property: color, border-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 .client-link:hover,
 .client-link:focus {
@@ -415,6 +462,9 @@ button {
   align-items: center;
   justify-content: center;
   color: var(--footer-icon-color);
+  transition-property: background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
   width: 44px;
   height: 44px;
@@ -456,9 +506,7 @@ button {
   flex-wrap: wrap;
   gap: 30px;
 }
-.portfolio-link {
-  display: block;
-}
+
 .portfolio-link:hover,
 .portfolio-link:focus {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
@@ -500,8 +548,10 @@ button {
   background-color: var(--portfolio-btn-background-color);
   color: var(--portfolio-btn-txt-color);
   letter-spacing: 0.03em;
+  transition-property: color, box-shadow, background-color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 .portfolio-button:hover,
 .portfolio-button:focus {
   background-color: var(--btn-back-color);
@@ -514,4 +564,82 @@ button {
   color: var(--btn-white-color);
   box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08),
     0px 2px 2px rgba(0, 0, 0, 0.12);
+}
+
+.portfolio-thumb {
+  position: relative;
+  overflow: hidden;
+}
+.porfolio-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  padding: 63px 24px;
+  font-size: 18px;
+  line-height: 1.55;
+  letter-spacing: 0.03em;
+  color: var(--btn-white-color);
+  background: rgba(33, 150, 243, 0.9);
+
+  transform: translateY(100%);
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.portfolio-thumb:hover .porfolio-overlay {
+  transform: translateY(0%);
+}
+/*---------------------backdrop ---------------------*/
+.backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: opacity 250ms var(--timing-function), visibility 250ms;
+}
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 528px;
+  min-height: 581px;
+  background: var(--background-white-color);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform, opacity;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+}
+.backdrop.is-hidden .modal {
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+}
+.icon-btn {
+  width: 18px;
+  height: 18px;
+}
+.icon-close {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+
+  background-color: var(--background-white-color);
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
